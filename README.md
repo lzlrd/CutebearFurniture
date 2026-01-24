@@ -13,7 +13,7 @@ Geyser is not supported due to having no good way of doing item display, bedrock
 
 1. build this plugin
 
-2. build [this](placeholderurl) and put it as server side resource pack
+2. build [this](https://codeberg.org/cutebear/FurnitureResource) and put it as server side resource pack
 
 3. install the plugin
 
