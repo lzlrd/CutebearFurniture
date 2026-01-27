@@ -1,5 +1,6 @@
 package dev._0w0b.cutebearFurniture;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -34,9 +35,10 @@ public final class CutebearFurniture extends JavaPlugin {
     NamespacedKey key = new NamespacedKey("cutebear_furniture", modelId);
 
     ItemStack result = new ItemStack(Material.POISONOUS_POTATO);
+    result.unsetData(DataComponentTypes.CONSUMABLE);
     ItemMeta meta = result.getItemMeta();
     if (meta != null) {
-      meta.setFood(null);
+
       meta.setDisplayName(name);
       meta.setItemModel(key);
       result.setItemMeta(meta);
