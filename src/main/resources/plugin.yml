@@ -1,4 +1,5 @@
 name: CutebearFurniture
-version: '1.0-SNAPSHOT'
+version: '1.2-SNAPSHOT'
 main: dev._0w0b.cutebearFurniture.CutebearFurniture
 api-version: '1.21'
+softdepend: [ProtocolLib, floodgate]

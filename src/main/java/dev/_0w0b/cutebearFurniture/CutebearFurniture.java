@@ -9,10 +9,14 @@ import org.bukkit.inventory.StonecuttingRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public final class CutebearFurniture extends JavaPlugin {
+import static org.bukkit.Bukkit.getLogger;
+import static org.bukkit.Bukkit.getServer;
 
+public final class CutebearFurniture extends JavaPlugin {
+  private static CutebearFurniture instance;
   @Override
   public void onEnable() {
+    CutebearFurniture.instance=this;
     // Plugin startup logic
     Bukkit.getPluginManager().registerEvents(new EventListener(), this);
     registerFurnitureRecipe("chair", "Oak Chair", Material.OAK_LOG);
@@ -24,6 +28,14 @@ public final class CutebearFurniture extends JavaPlugin {
     registerFurnitureRecipe("chair_modern", "Modern Chair", Material.OAK_LOG);
     registerFurnitureRecipe("chair_dinner", "Dinner Chair", Material.OAK_LOG);
     registerFurnitureRecipe("bathtub", "BathTub", Material.QUARTZ_BLOCK);
+
+    if (getServer().getPluginManager().isPluginEnabled("floodgate")) {
+      if (getServer().getPluginManager().isPluginEnabled("ProtocolLib")) {
+        BedrockCrashFix.init();
+      }else{
+        getLogger().severe("ProtocolLib not installed, Bedrock player may be inventory banned!");
+      }
+    }
   }
 
   @Override
@@ -46,5 +58,8 @@ public final class CutebearFurniture extends JavaPlugin {
 
     StonecuttingRecipe recipe = new StonecuttingRecipe(key, result, input);
     Bukkit.addRecipe(recipe);
+  }
+  public static CutebearFurniture getInstance(){
+    return instance;
   }
 }

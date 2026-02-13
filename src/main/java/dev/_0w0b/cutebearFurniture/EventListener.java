@@ -79,22 +79,14 @@ public class EventListener implements Listener {
                         .getPersistentDataContainer()
                         .set(
                             new NamespacedKey(
-                                event
-                                    .getPlayer()
-                                    .getServer()
-                                    .getPluginManager()
-                                    .getPlugin("CutebearFurniture"),
+                                CutebearFurniture.getInstance(),
                                 "furniture"),
                             PersistentDataType.STRING,
                             display.getUniqueId().toString());
                     if (id.contains("chair") || id.contains("stool")) {
                       NamespacedKey SITTABLE_KEY =
                           new NamespacedKey(
-                              event
-                                  .getPlayer()
-                                  .getServer()
-                                  .getPluginManager()
-                                  .getPlugin("CutebearFurniture"),
+                              CutebearFurniture.getInstance(),
                               "is_sittable");
                       entity
                           .getPersistentDataContainer()
@@ -114,7 +106,7 @@ public class EventListener implements Listener {
 
     NamespacedKey SITTABLE_KEY =
         new NamespacedKey(
-            event.getPlayer().getServer().getPluginManager().getPlugin("CutebearFurniture"),
+            CutebearFurniture.getInstance(),
             "is_sittable");
     if (!interaction.getPersistentDataContainer().has(SITTABLE_KEY, PersistentDataType.BYTE))
       return;
@@ -123,7 +115,7 @@ public class EventListener implements Listener {
 
     NamespacedKey key =
         new NamespacedKey(
-            player.getServer().getPluginManager().getPlugin("CutebearFurniture"), "furniture");
+            CutebearFurniture.getInstance(), "furniture");
     String uuidStr = interaction.getPersistentDataContainer().get(key, PersistentDataType.STRING);
 
     if (uuidStr == null || player.isSneaking()) return;
@@ -150,11 +142,7 @@ public class EventListener implements Listener {
                   entity.setPersistent(false);
                   NamespacedKey SIT_ARMORSTAND_KEY =
                       new NamespacedKey(
-                          event
-                              .getPlayer()
-                              .getServer()
-                              .getPluginManager()
-                              .getPlugin("CutebearFurniture"),
+                          CutebearFurniture.getInstance(),
                           "sit_armorstand");
                   entity
                       .getPersistentDataContainer()
@@ -174,7 +162,7 @@ public class EventListener implements Listener {
     }
     NamespacedKey key =
         new NamespacedKey(
-            event.getDamager().getServer().getPluginManager().getPlugin("CutebearFurniture"),
+           CutebearFurniture.getInstance(),
             "furniture");
     String uuidStr = interaction.getPersistentDataContainer().get(key, PersistentDataType.STRING);
 
@@ -199,11 +187,7 @@ public class EventListener implements Listener {
                     e.getPersistentDataContainer()
                         .has(
                             new NamespacedKey(
-                                event
-                                    .getEntity()
-                                    .getServer()
-                                    .getPluginManager()
-                                    .getPlugin("CutebearFurniture"),
+                                CutebearFurniture.getInstance(),
                                 "sit_armorstand"),
                             PersistentDataType.BYTE))
             .forEach(Entity::remove);
@@ -218,7 +202,7 @@ public class EventListener implements Listener {
     if (event.getDismounted() instanceof ArmorStand seat) {
       NamespacedKey SIT_ARMORSTAND_KEY =
           new NamespacedKey(
-              event.getEntity().getServer().getPluginManager().getPlugin("CutebearFurniture"),
+              CutebearFurniture.getInstance(),
               "sit_armorstand");
       if (seat.getPersistentDataContainer().has(SIT_ARMORSTAND_KEY, PersistentDataType.BYTE)) {
         seat.remove();
@@ -235,7 +219,7 @@ public class EventListener implements Listener {
             .getPersistentDataContainer()
             .has(
                 new NamespacedKey(
-                    event.getPlayer().getServer().getPluginManager().getPlugin("CutebearFurniture"),
+                   CutebearFurniture.getInstance(),
                     "sit_armorstand"),
                 PersistentDataType.BYTE)) {
       vehicle.remove();
