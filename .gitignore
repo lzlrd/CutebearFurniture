@@ -5,6 +5,7 @@
 .project
 .settings/
 bin/
+managementpass.txt
 
 *.iml
 *.ipr
