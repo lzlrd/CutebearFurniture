@@ -5,9 +5,13 @@ import java.util.UUID;
 import org.bukkit.*;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.*;
+import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDismountEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
@@ -42,7 +46,24 @@ public class EventListener implements Listener {
                         return;
                     if (event.getClickedBlock().getRelative(BlockFace.UP).getType() != Material.AIR)
                         return;
-                    Location spawnLoc = event.getClickedBlock().getRelative(BlockFace.UP).getLocation();
+
+                    Block placedBlock = event.getClickedBlock().getRelative(BlockFace.UP);
+                    EquipmentSlot hand = event.getHand();
+                    if (hand == null) hand = EquipmentSlot.HAND;
+                    BlockPlaceEvent placeEvent = new BlockPlaceEvent(
+                            placedBlock,
+                            placedBlock.getState(),
+                            event.getClickedBlock(),
+                            item,
+                            event.getPlayer(),
+                            true,
+                            hand
+                    );
+                    Bukkit.getPluginManager().callEvent(placeEvent);
+                    if (placeEvent.isCancelled() || !placeEvent.canBuild())
+                        return;
+
+                    Location spawnLoc = placedBlock.getLocation();
                     spawnLoc.add(0.5, 0.5, 0.5);
 
                     float snappedYaw = switch (event.getPlayer().getFacing()) {
@@ -156,6 +177,12 @@ public class EventListener implements Listener {
             return;
         if (event.getDamager() instanceof Player player) {
             if (player.getGameMode() == GameMode.ADVENTURE) {
+                event.setCancelled(true);
+                return;
+            }
+            BlockBreakEvent breakEvent = new BlockBreakEvent(interaction.getLocation().getBlock(), player);
+            Bukkit.getPluginManager().callEvent(breakEvent);
+            if (breakEvent.isCancelled()) {
                 event.setCancelled(true);
                 return;
             }
