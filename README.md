@@ -1,5 +1,7 @@
 # Cutebear's furniture
 
+Fork of [cutebear/CutebearFurniture](https://codeberg.org/cutebear/CutebearFurniture) that adds wood, wool and concrete variants. Use it with the matching [FurnitureResource fork](https://github.com/lzlrd/FurnitureResource).
+
 ## A furniture plugin for papermc.
 
 ### Resources came from [paladins-furniture](https://github.com/UnlikePaladin/paladins-furniture)
@@ -11,19 +13,26 @@ Geyser is not supported due to having no good way of doing item display, bedrock
 
 ## Install:
 
-1. build this plugin
+1. download the jar from [Releases](https://github.com/lzlrd/CutebearFurniture/releases) or build this plugin
 
-2. build [this](https://codeberg.org/cutebear/FurnitureResource) and put it as server side resource pack
+2. download `cutebear_furniture.zip` from [FurnitureResource releases](https://github.com/lzlrd/FurnitureResource/releases) (or build [it](https://github.com/lzlrd/FurnitureResource)) and put it as server side resource pack
 
 3. install the plugin
 
-4. (Geyser only) Install [GeyserDisplayEntity](https://github.com/GeyserExtensionists/GeyserDisplayEntity) in geyser extensions and add [pack](https://github.com/GeyserExtensionists/GeyserDisplayEntity/blob/main/packs/GeyserDisplayEntityPack.mcpack) to geyser's pack
+4. (Geyser only) Install [GeyserDisplayEntity](https://github.com/GeyserExtensionists/GeyserDisplayEntity) in geyser extensions and add [pack](https://github.com/GeyserExtensionists/GeyserDisplayEntity/blob/main/packs/GeyserDisplayEntityPack.mcpack) to geyser's pack, then add `cutebear_furniture.mcpack` to geyser's `packs` and `cutebear_furniture.json` to geyser's `custom_mappings` from the same FurnitureResource release
 
 
 ## Player guide:
 
 Furniture could be made in the stonecutter
 
-Current recipe are made of oak log, if I forgot to update this check [here](https://codeberg.org/cutebear/CutebearFurniture/src/branch/main/src/main/java/dev/_0w0b/cutebearFurniture/CutebearFurniture.java#L21)
+| Input | Furniture |
+|---|---|
+| Any log, wood, stem or hyphae (stripped or not) | Chair, Dinner Table, Coffee Table, Classic Desk, Classic Stool, Classic Chair, Modern Chair, Dinner Chair in that wood |
+| Any wool | Arm Chair in that colour |
+| Any concrete | Trash Can in that colour |
+| Quartz Block | BathTub, Sink, Toilet |
+
+Wood types: oak, spruce, birch, jungle, acacia, dark oak, mangrove, cherry, pale oak, poplar, crimson and warped. Types missing from the server's Minecraft version are skipped. Check [here](src/main/java/dev/_0w0b/cutebearFurniture/CutebearFurniture.java) if this is out of date.
 
 
