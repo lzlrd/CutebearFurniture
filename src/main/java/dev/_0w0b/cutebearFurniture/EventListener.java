@@ -38,8 +38,6 @@ public class EventListener implements Listener {
 
             if (event.getClickedBlock().getType().isInteractable() && !event.getPlayer().isSneaking())
                 return;
-            if (event.getBlockFace() != BlockFace.UP)
-                return;
             if (event.hasItem()) {
                 ItemStack item = event.getItem();
                 if (item.getType() == Material.POISONOUS_POTATO
@@ -48,10 +46,29 @@ public class EventListener implements Listener {
                     String id = String.valueOf(item.getData(DataComponentTypes.ITEM_MODEL).key());
                     if (!id.startsWith("cutebear_furniture:"))
                         return;
-                    if (event.getClickedBlock().getRelative(BlockFace.UP).getType() != Material.AIR)
+                    // Floor pieces go on top of the clicked block, wall pieces in front of it and ceiling pieces under it.
+                    FurnitureTypes.Type type = FurnitureTypes.get(id);
+                    FurnitureTypes.Placement placement = type == null ? FurnitureTypes.Placement.FLOOR : type.placement();
+                    BlockFace face = event.getBlockFace();
+                    BlockFace from = event.getPlayer().getFacing();
+                    switch (placement) {
+                        case FLOOR -> {
+                            if (face != BlockFace.UP)
+                                return;
+                        }
+                        case CEILING -> {
+                            if (face != BlockFace.DOWN)
+                                return;
+                        }
+                        case WALL -> {
+                            if (face == BlockFace.UP || face == BlockFace.DOWN)
+                                return;
+                            from = face.getOppositeFace();
+                        }
+                    }
+                    Block placedBlock = event.getClickedBlock().getRelative(face);
+                    if (!placedBlock.isEmpty())
                         return;
-
-                    Block placedBlock = event.getClickedBlock().getRelative(BlockFace.UP);
                     EquipmentSlot hand = event.getHand();
                     if (hand == null) hand = EquipmentSlot.HAND;
                     BlockPlaceEvent placeEvent = new BlockPlaceEvent(
@@ -70,13 +87,15 @@ public class EventListener implements Listener {
                     Location spawnLoc = placedBlock.getLocation();
                     spawnLoc.add(0.5, 0.5, 0.5);
 
-                    float snappedYaw = switch (event.getPlayer().getFacing()) {
+                    float snappedYaw = switch (from) {
                         case NORTH -> 270f; // North (180) + 90 = 270 (East)
                         case SOUTH -> 90f; // South (0) + 90 = 90 (West)
                         case WEST -> 180f; // West (90) + 90 = 180 (North)
                         case EAST -> 0f; // East (270) + 90 = 360/0 (South)
                         default -> 0f;
                     };
+                    if (type != null)
+                        snappedYaw = (snappedYaw + type.yawOffset()) % 360f;
 
                     spawnLoc.setYaw(snappedYaw);
                     ItemDisplay display = event
@@ -110,7 +129,9 @@ public class EventListener implements Listener {
                                                                 "furniture"),
                                                         PersistentDataType.STRING,
                                                         display.getUniqueId().toString());
-                                        if (id.contains("chair") || id.contains("stool") || id.contains("toilet")) {
+                                        boolean seat = type != null ? type.seat()
+                                                : id.contains("chair") || id.contains("stool") || id.contains("toilet");
+                                        if (seat) {
                                             NamespacedKey SITTABLE_KEY = new NamespacedKey(
                                                     CutebearFurniture.getInstance(),
                                                     "is_sittable");

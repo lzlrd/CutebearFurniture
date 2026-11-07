@@ -1,6 +1,8 @@
 package dev._0w0b.cutebearFurniture;
 
 import io.papermc.paper.datacomponent.DataComponentTypes;
+import java.util.ArrayList;
+import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -98,6 +100,11 @@ public final class CutebearFurniture extends JavaPlugin {
         for (String[] furniture : QUARTZ_FURNITURE) {
             registerFurnitureRecipe("gold_" + furniture[0], "Gold " + furniture[1], materialChoice("gold_block"));
         }
+        // The rest of Paladin's furniture, listed in furniture.json.
+        FurnitureTypes.load(this);
+        for (FurnitureTypes.Type type : FurnitureTypes.all()) {
+            registerFurnitureRecipe(type.id(), type.name(), materialsChoice(type.inputs()));
+        }
         getLogger().info("Registered " + recipeCount + " furniture recipes");
 
         // Furniture placed before barriers existed becomes solid. Chunks that load later are handled as they load.
@@ -133,6 +140,17 @@ public final class CutebearFurniture extends JavaPlugin {
         if (material == null)
             return null;
         return new RecipeChoice.MaterialChoice(material);
+    }
+
+    // Any of the named materials that exist in this Minecraft version, or null if none do.
+    private static RecipeChoice materialsChoice(List<String> materialNames) {
+        List<Material> materials = new ArrayList<>();
+        for (String name : materialNames) {
+            Material material = Material.matchMaterial(name);
+            if (material != null)
+                materials.add(material);
+        }
+        return materials.isEmpty() ? null : new RecipeChoice.MaterialChoice(materials);
     }
 
     private static String displayName(String id) {

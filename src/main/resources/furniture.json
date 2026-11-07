@@ -1,0 +1,1335 @@
+{
+	"items": [
+		{
+			"id": "white_simple_sofa",
+			"name": "Simple White Sofa",
+			"inputs": [
+				"white_wool"
+			],
+			"placement": "floor",
+			"yaw_offset": 0,
+			"seat": true,
+			"light": 0,
+			"footprint": [
+				[
+					0,
+					0,
+					0
+				]
+			]
+		},
+		{
+			"id": "white_chair_classic",
+			"name": "Classic White Oak Chair",
+			"inputs": [
+				"white_wool"
+			],
+			"placement": "floor",
+			"yaw_offset": 0,
+			"seat": true,
+			"light": 0,
+			"footprint": [
+				[
+					0,
+					0,
+					0
+				]
+			]
+		},
+		{
+			"id": "white_shower_towel",
+			"name": "White Shower Towel",
+			"inputs": [
+				"white_carpet"
+			],
+			"placement": "wall",
+			"yaw_offset": 270,
+			"seat": false,
+			"light": 0,
+			"footprint": []
+		},
+		{
+			"id": "orange_simple_sofa",
+			"name": "Simple Orange Sofa",
+			"inputs": [
+				"orange_wool"
+			],
+			"placement": "floor",
+			"yaw_offset": 0,
+			"seat": true,
+			"light": 0,
+			"footprint": [
+				[
+					0,
+					0,
+					0
+				]
+			]
+		},
+		{
+			"id": "orange_chair_classic",
+			"name": "Classic Orange Oak Chair",
+			"inputs": [
+				"orange_wool"
+			],
+			"placement": "floor",
+			"yaw_offset": 0,
+			"seat": true,
+			"light": 0,
+			"footprint": [
+				[
+					0,
+					0,
+					0
+				]
+			]
+		},
+		{
+			"id": "orange_shower_towel",
+			"name": "Orange Shower Towel",
+			"inputs": [
+				"orange_carpet"
+			],
+			"placement": "wall",
+			"yaw_offset": 270,
+			"seat": false,
+			"light": 0,
+			"footprint": []
+		},
+		{
+			"id": "magenta_simple_sofa",
+			"name": "Simple Magenta Sofa",
+			"inputs": [
+				"magenta_wool"
+			],
+			"placement": "floor",
+			"yaw_offset": 0,
+			"seat": true,
+			"light": 0,
+			"footprint": [
+				[
+					0,
+					0,
+					0
+				]
+			]
+		},
+		{
+			"id": "magenta_chair_classic",
+			"name": "Classic Magenta Oak Chair",
+			"inputs": [
+				"magenta_wool"
+			],
+			"placement": "floor",
+			"yaw_offset": 0,
+			"seat": true,
+			"light": 0,
+			"footprint": [
+				[
+					0,
+					0,
+					0
+				]
+			]
+		},
+		{
+			"id": "magenta_shower_towel",
+			"name": "Magenta Shower Towel",
+			"inputs": [
+				"magenta_carpet"
+			],
+			"placement": "wall",
+			"yaw_offset": 270,
+			"seat": false,
+			"light": 0,
+			"footprint": []
+		},
+		{
+			"id": "light_blue_simple_sofa",
+			"name": "Simple Light Blue Sofa",
+			"inputs": [
+				"light_blue_wool"
+			],
+			"placement": "floor",
+			"yaw_offset": 0,
+			"seat": true,
+			"light": 0,
+			"footprint": [
+				[
+					0,
+					0,
+					0
+				]
+			]
+		},
+		{
+			"id": "light_blue_chair_classic",
+			"name": "Classic Light Blue Oak Chair",
+			"inputs": [
+				"light_blue_wool"
+			],
+			"placement": "floor",
+			"yaw_offset": 0,
+			"seat": true,
+			"light": 0,
+			"footprint": [
+				[
+					0,
+					0,
+					0
+				]
+			]
+		},
+		{
+			"id": "light_blue_shower_towel",
+			"name": "Light Blue Shower Towel",
+			"inputs": [
+				"light_blue_carpet"
+			],
+			"placement": "wall",
+			"yaw_offset": 270,
+			"seat": false,
+			"light": 0,
+			"footprint": []
+		},
+		{
+			"id": "yellow_simple_sofa",
+			"name": "Simple Yellow Sofa",
+			"inputs": [
+				"yellow_wool"
+			],
+			"placement": "floor",
+			"yaw_offset": 0,
+			"seat": true,
+			"light": 0,
+			"footprint": [
+				[
+					0,
+					0,
+					0
+				]
+			]
+		},
+		{
+			"id": "yellow_chair_classic",
+			"name": "Classic Yellow Oak Chair",
+			"inputs": [
+				"yellow_wool"
+			],
+			"placement": "floor",
+			"yaw_offset": 0,
+			"seat": true,
+			"light": 0,
+			"footprint": [
+				[
+					0,
+					0,
+					0
+				]
+			]
+		},
+		{
+			"id": "yellow_shower_towel",
+			"name": "Yellow Shower Towel",
+			"inputs": [
+				"yellow_carpet"
+			],
+			"placement": "wall",
+			"yaw_offset": 270,
+			"seat": false,
+			"light": 0,
+			"footprint": []
+		},
+		{
+			"id": "lime_simple_sofa",
+			"name": "Simple Lime Sofa",
+			"inputs": [
+				"lime_wool"
+			],
+			"placement": "floor",
+			"yaw_offset": 0,
+			"seat": true,
+			"light": 0,
+			"footprint": [
+				[
+					0,
+					0,
+					0
+				]
+			]
+		},
+		{
+			"id": "lime_chair_classic",
+			"name": "Classic Lime Oak Chair",
+			"inputs": [
+				"lime_wool"
+			],
+			"placement": "floor",
+			"yaw_offset": 0,
+			"seat": true,
+			"light": 0,
+			"footprint": [
+				[
+					0,
+					0,
+					0
+				]
+			]
+		},
+		{
+			"id": "lime_shower_towel",
+			"name": "Lime Shower Towel",
+			"inputs": [
+				"lime_carpet"
+			],
+			"placement": "wall",
+			"yaw_offset": 270,
+			"seat": false,
+			"light": 0,
+			"footprint": []
+		},
+		{
+			"id": "pink_simple_sofa",
+			"name": "Simple Pink Sofa",
+			"inputs": [
+				"pink_wool"
+			],
+			"placement": "floor",
+			"yaw_offset": 0,
+			"seat": true,
+			"light": 0,
+			"footprint": [
+				[
+					0,
+					0,
+					0
+				]
+			]
+		},
+		{
+			"id": "pink_chair_classic",
+			"name": "Classic Pink Oak Chair",
+			"inputs": [
+				"pink_wool"
+			],
+			"placement": "floor",
+			"yaw_offset": 0,
+			"seat": true,
+			"light": 0,
+			"footprint": [
+				[
+					0,
+					0,
+					0
+				]
+			]
+		},
+		{
+			"id": "pink_shower_towel",
+			"name": "Pink Shower Towel",
+			"inputs": [
+				"pink_carpet"
+			],
+			"placement": "wall",
+			"yaw_offset": 270,
+			"seat": false,
+			"light": 0,
+			"footprint": []
+		},
+		{
+			"id": "gray_simple_sofa",
+			"name": "Simple Gray Sofa",
+			"inputs": [
+				"gray_wool"
+			],
+			"placement": "floor",
+			"yaw_offset": 0,
+			"seat": true,
+			"light": 0,
+			"footprint": [
+				[
+					0,
+					0,
+					0
+				]
+			]
+		},
+		{
+			"id": "gray_chair_classic",
+			"name": "Classic Gray Oak Chair",
+			"inputs": [
+				"gray_wool"
+			],
+			"placement": "floor",
+			"yaw_offset": 0,
+			"seat": true,
+			"light": 0,
+			"footprint": [
+				[
+					0,
+					0,
+					0
+				]
+			]
+		},
+		{
+			"id": "gray_shower_towel",
+			"name": "Gray Shower Towel",
+			"inputs": [
+				"gray_carpet"
+			],
+			"placement": "wall",
+			"yaw_offset": 270,
+			"seat": false,
+			"light": 0,
+			"footprint": []
+		},
+		{
+			"id": "light_gray_simple_sofa",
+			"name": "Simple Light Gray Sofa",
+			"inputs": [
+				"light_gray_wool"
+			],
+			"placement": "floor",
+			"yaw_offset": 0,
+			"seat": true,
+			"light": 0,
+			"footprint": [
+				[
+					0,
+					0,
+					0
+				]
+			]
+		},
+		{
+			"id": "light_gray_chair_classic",
+			"name": "Classic Light Gray Oak Chair",
+			"inputs": [
+				"light_gray_wool"
+			],
+			"placement": "floor",
+			"yaw_offset": 0,
+			"seat": true,
+			"light": 0,
+			"footprint": [
+				[
+					0,
+					0,
+					0
+				]
+			]
+		},
+		{
+			"id": "light_gray_shower_towel",
+			"name": "Light Gray Shower Towel",
+			"inputs": [
+				"light_gray_carpet"
+			],
+			"placement": "wall",
+			"yaw_offset": 270,
+			"seat": false,
+			"light": 0,
+			"footprint": []
+		},
+		{
+			"id": "cyan_simple_sofa",
+			"name": "Simple Cyan Sofa",
+			"inputs": [
+				"cyan_wool"
+			],
+			"placement": "floor",
+			"yaw_offset": 0,
+			"seat": true,
+			"light": 0,
+			"footprint": [
+				[
+					0,
+					0,
+					0
+				]
+			]
+		},
+		{
+			"id": "cyan_chair_classic",
+			"name": "Classic Cyan Oak Chair",
+			"inputs": [
+				"cyan_wool"
+			],
+			"placement": "floor",
+			"yaw_offset": 0,
+			"seat": true,
+			"light": 0,
+			"footprint": [
+				[
+					0,
+					0,
+					0
+				]
+			]
+		},
+		{
+			"id": "cyan_shower_towel",
+			"name": "Cyan Shower Towel",
+			"inputs": [
+				"cyan_carpet"
+			],
+			"placement": "wall",
+			"yaw_offset": 270,
+			"seat": false,
+			"light": 0,
+			"footprint": []
+		},
+		{
+			"id": "purple_simple_sofa",
+			"name": "Simple Purple Sofa",
+			"inputs": [
+				"purple_wool"
+			],
+			"placement": "floor",
+			"yaw_offset": 0,
+			"seat": true,
+			"light": 0,
+			"footprint": [
+				[
+					0,
+					0,
+					0
+				]
+			]
+		},
+		{
+			"id": "purple_chair_classic",
+			"name": "Classic Purple Oak Chair",
+			"inputs": [
+				"purple_wool"
+			],
+			"placement": "floor",
+			"yaw_offset": 0,
+			"seat": true,
+			"light": 0,
+			"footprint": [
+				[
+					0,
+					0,
+					0
+				]
+			]
+		},
+		{
+			"id": "purple_shower_towel",
+			"name": "Purple Shower Towel",
+			"inputs": [
+				"purple_carpet"
+			],
+			"placement": "wall",
+			"yaw_offset": 270,
+			"seat": false,
+			"light": 0,
+			"footprint": []
+		},
+		{
+			"id": "blue_simple_sofa",
+			"name": "Simple Blue Sofa",
+			"inputs": [
+				"blue_wool"
+			],
+			"placement": "floor",
+			"yaw_offset": 0,
+			"seat": true,
+			"light": 0,
+			"footprint": [
+				[
+					0,
+					0,
+					0
+				]
+			]
+		},
+		{
+			"id": "blue_chair_classic",
+			"name": "Classic Blue Oak Chair",
+			"inputs": [
+				"blue_wool"
+			],
+			"placement": "floor",
+			"yaw_offset": 0,
+			"seat": true,
+			"light": 0,
+			"footprint": [
+				[
+					0,
+					0,
+					0
+				]
+			]
+		},
+		{
+			"id": "blue_shower_towel",
+			"name": "Blue Shower Towel",
+			"inputs": [
+				"blue_carpet"
+			],
+			"placement": "wall",
+			"yaw_offset": 270,
+			"seat": false,
+			"light": 0,
+			"footprint": []
+		},
+		{
+			"id": "brown_simple_sofa",
+			"name": "Simple Brown Sofa",
+			"inputs": [
+				"brown_wool"
+			],
+			"placement": "floor",
+			"yaw_offset": 0,
+			"seat": true,
+			"light": 0,
+			"footprint": [
+				[
+					0,
+					0,
+					0
+				]
+			]
+		},
+		{
+			"id": "brown_chair_classic",
+			"name": "Classic Brown Oak Chair",
+			"inputs": [
+				"brown_wool"
+			],
+			"placement": "floor",
+			"yaw_offset": 0,
+			"seat": true,
+			"light": 0,
+			"footprint": [
+				[
+					0,
+					0,
+					0
+				]
+			]
+		},
+		{
+			"id": "brown_shower_towel",
+			"name": "Brown Shower Towel",
+			"inputs": [
+				"brown_carpet"
+			],
+			"placement": "wall",
+			"yaw_offset": 270,
+			"seat": false,
+			"light": 0,
+			"footprint": []
+		},
+		{
+			"id": "green_simple_sofa",
+			"name": "Simple Green Sofa",
+			"inputs": [
+				"green_wool"
+			],
+			"placement": "floor",
+			"yaw_offset": 0,
+			"seat": true,
+			"light": 0,
+			"footprint": [
+				[
+					0,
+					0,
+					0
+				]
+			]
+		},
+		{
+			"id": "green_chair_classic",
+			"name": "Classic Green Oak Chair",
+			"inputs": [
+				"green_wool"
+			],
+			"placement": "floor",
+			"yaw_offset": 0,
+			"seat": true,
+			"light": 0,
+			"footprint": [
+				[
+					0,
+					0,
+					0
+				]
+			]
+		},
+		{
+			"id": "green_shower_towel",
+			"name": "Green Shower Towel",
+			"inputs": [
+				"green_carpet"
+			],
+			"placement": "wall",
+			"yaw_offset": 270,
+			"seat": false,
+			"light": 0,
+			"footprint": []
+		},
+		{
+			"id": "red_simple_sofa",
+			"name": "Simple Red Sofa",
+			"inputs": [
+				"red_wool"
+			],
+			"placement": "floor",
+			"yaw_offset": 0,
+			"seat": true,
+			"light": 0,
+			"footprint": [
+				[
+					0,
+					0,
+					0
+				]
+			]
+		},
+		{
+			"id": "red_chair_classic",
+			"name": "Classic Red Oak Chair",
+			"inputs": [
+				"red_wool"
+			],
+			"placement": "floor",
+			"yaw_offset": 0,
+			"seat": true,
+			"light": 0,
+			"footprint": [
+				[
+					0,
+					0,
+					0
+				]
+			]
+		},
+		{
+			"id": "red_shower_towel",
+			"name": "Red Shower Towel",
+			"inputs": [
+				"red_carpet"
+			],
+			"placement": "wall",
+			"yaw_offset": 270,
+			"seat": false,
+			"light": 0,
+			"footprint": []
+		},
+		{
+			"id": "black_simple_sofa",
+			"name": "Simple Black Sofa",
+			"inputs": [
+				"black_wool"
+			],
+			"placement": "floor",
+			"yaw_offset": 0,
+			"seat": true,
+			"light": 0,
+			"footprint": [
+				[
+					0,
+					0,
+					0
+				]
+			]
+		},
+		{
+			"id": "black_chair_classic",
+			"name": "Classic Black Oak Chair",
+			"inputs": [
+				"black_wool"
+			],
+			"placement": "floor",
+			"yaw_offset": 0,
+			"seat": true,
+			"light": 0,
+			"footprint": [
+				[
+					0,
+					0,
+					0
+				]
+			]
+		},
+		{
+			"id": "black_shower_towel",
+			"name": "Black Shower Towel",
+			"inputs": [
+				"black_carpet"
+			],
+			"placement": "wall",
+			"yaw_offset": 270,
+			"seat": false,
+			"light": 0,
+			"footprint": []
+		},
+		{
+			"id": "froggy_chair",
+			"name": "Froggy Chair",
+			"inputs": [
+				"green_concrete"
+			],
+			"placement": "floor",
+			"yaw_offset": 0,
+			"seat": true,
+			"light": 0,
+			"footprint": [
+				[
+					0,
+					0,
+					0
+				]
+			]
+		},
+		{
+			"id": "froggy_chair_pink",
+			"name": "Pink Froggy Chair",
+			"inputs": [
+				"pink_concrete"
+			],
+			"placement": "floor",
+			"yaw_offset": 0,
+			"seat": true,
+			"light": 0,
+			"footprint": [
+				[
+					0,
+					0,
+					0
+				]
+			]
+		},
+		{
+			"id": "froggy_chair_light_blue",
+			"name": "Light Blue Froggy Chair",
+			"inputs": [
+				"light_blue_concrete"
+			],
+			"placement": "floor",
+			"yaw_offset": 0,
+			"seat": true,
+			"light": 0,
+			"footprint": [
+				[
+					0,
+					0,
+					0
+				]
+			]
+		},
+		{
+			"id": "froggy_chair_blue",
+			"name": "Blue Froggy Chair",
+			"inputs": [
+				"blue_concrete"
+			],
+			"placement": "floor",
+			"yaw_offset": 0,
+			"seat": true,
+			"light": 0,
+			"footprint": [
+				[
+					0,
+					0,
+					0
+				]
+			]
+		},
+		{
+			"id": "froggy_chair_orange",
+			"name": "Orange Froggy Chair",
+			"inputs": [
+				"orange_concrete"
+			],
+			"placement": "floor",
+			"yaw_offset": 0,
+			"seat": true,
+			"light": 0,
+			"footprint": [
+				[
+					0,
+					0,
+					0
+				]
+			]
+		},
+		{
+			"id": "froggy_chair_yellow",
+			"name": "Yellow Froggy Chair",
+			"inputs": [
+				"yellow_concrete"
+			],
+			"placement": "floor",
+			"yaw_offset": 0,
+			"seat": true,
+			"light": 0,
+			"footprint": [
+				[
+					0,
+					0,
+					0
+				]
+			]
+		},
+		{
+			"id": "arm_chair_leather",
+			"name": "Leather Armchair",
+			"inputs": [
+				"leather"
+			],
+			"placement": "floor",
+			"yaw_offset": 0,
+			"seat": true,
+			"light": 0,
+			"footprint": [
+				[
+					0,
+					0,
+					0
+				]
+			]
+		},
+		{
+			"id": "white_fridge",
+			"name": "White Fridge",
+			"inputs": [
+				"white_concrete"
+			],
+			"placement": "floor",
+			"yaw_offset": 90,
+			"seat": false,
+			"light": 0,
+			"footprint": [
+				[
+					0,
+					0,
+					0
+				]
+			]
+		},
+		{
+			"id": "white_freezer",
+			"name": "White Freezer",
+			"inputs": [
+				"white_concrete"
+			],
+			"placement": "floor",
+			"yaw_offset": 90,
+			"seat": false,
+			"light": 0,
+			"footprint": [
+				[
+					0,
+					0,
+					0
+				]
+			]
+		},
+		{
+			"id": "white_stove",
+			"name": "White Stove",
+			"inputs": [
+				"white_concrete"
+			],
+			"placement": "floor",
+			"yaw_offset": 90,
+			"seat": false,
+			"light": 0,
+			"footprint": [
+				[
+					0,
+					0,
+					0
+				]
+			]
+		},
+		{
+			"id": "white_oven_range_hood",
+			"name": "White Oven Range Hood",
+			"inputs": [
+				"white_concrete"
+			],
+			"placement": "wall",
+			"yaw_offset": 270,
+			"seat": false,
+			"light": 0,
+			"footprint": []
+		},
+		{
+			"id": "gray_fridge",
+			"name": "Gray Fridge",
+			"inputs": [
+				"gray_concrete"
+			],
+			"placement": "floor",
+			"yaw_offset": 90,
+			"seat": false,
+			"light": 0,
+			"footprint": [
+				[
+					0,
+					0,
+					0
+				]
+			]
+		},
+		{
+			"id": "gray_freezer",
+			"name": "Gray Freezer",
+			"inputs": [
+				"gray_concrete"
+			],
+			"placement": "floor",
+			"yaw_offset": 90,
+			"seat": false,
+			"light": 0,
+			"footprint": [
+				[
+					0,
+					0,
+					0
+				]
+			]
+		},
+		{
+			"id": "gray_stove",
+			"name": "Gray Stove",
+			"inputs": [
+				"gray_concrete"
+			],
+			"placement": "floor",
+			"yaw_offset": 90,
+			"seat": false,
+			"light": 0,
+			"footprint": [
+				[
+					0,
+					0,
+					0
+				]
+			]
+		},
+		{
+			"id": "gray_oven_range_hood",
+			"name": "Gray Oven Range Hood",
+			"inputs": [
+				"gray_concrete"
+			],
+			"placement": "wall",
+			"yaw_offset": 270,
+			"seat": false,
+			"light": 0,
+			"footprint": []
+		},
+		{
+			"id": "iron_fridge",
+			"name": "Iron Fridge",
+			"inputs": [
+				"iron_block"
+			],
+			"placement": "floor",
+			"yaw_offset": 90,
+			"seat": false,
+			"light": 0,
+			"footprint": [
+				[
+					0,
+					0,
+					0
+				]
+			]
+		},
+		{
+			"id": "iron_freezer",
+			"name": "Iron Freezer",
+			"inputs": [
+				"iron_block"
+			],
+			"placement": "floor",
+			"yaw_offset": 90,
+			"seat": false,
+			"light": 0,
+			"footprint": [
+				[
+					0,
+					0,
+					0
+				]
+			]
+		},
+		{
+			"id": "iron_stove",
+			"name": "Iron Stove",
+			"inputs": [
+				"iron_block"
+			],
+			"placement": "floor",
+			"yaw_offset": 90,
+			"seat": false,
+			"light": 0,
+			"footprint": [
+				[
+					0,
+					0,
+					0
+				]
+			]
+		},
+		{
+			"id": "iron_oven_range_hood",
+			"name": "Iron Oven Range Hood",
+			"inputs": [
+				"iron_block"
+			],
+			"placement": "wall",
+			"yaw_offset": 270,
+			"seat": false,
+			"light": 0,
+			"footprint": []
+		},
+		{
+			"id": "xbox_fridge",
+			"name": "Xbox Series X Fridge",
+			"inputs": [
+				"black_concrete"
+			],
+			"placement": "floor",
+			"yaw_offset": 90,
+			"seat": false,
+			"light": 0,
+			"footprint": [
+				[
+					0,
+					0,
+					0
+				],
+				[
+					0,
+					1,
+					0
+				]
+			]
+		},
+		{
+			"id": "iron_microwave",
+			"name": "Iron Microwave",
+			"inputs": [
+				"iron_block"
+			],
+			"placement": "floor",
+			"yaw_offset": 90,
+			"seat": false,
+			"light": 0,
+			"footprint": []
+		},
+		{
+			"id": "iron_toaster",
+			"name": "Iron Toaster",
+			"inputs": [
+				"iron_block"
+			],
+			"placement": "floor",
+			"yaw_offset": 270,
+			"seat": false,
+			"light": 0,
+			"footprint": []
+		},
+		{
+			"id": "kitchen_stovetop",
+			"name": "Kitchen Stovetop",
+			"inputs": [
+				"iron_block"
+			],
+			"placement": "floor",
+			"yaw_offset": 90,
+			"seat": false,
+			"light": 0,
+			"footprint": []
+		},
+		{
+			"id": "simple_light",
+			"name": "Simple Ceiling Light",
+			"inputs": [
+				"glowstone"
+			],
+			"placement": "ceiling",
+			"yaw_offset": 0,
+			"seat": false,
+			"light": 15,
+			"footprint": []
+		},
+		{
+			"id": "white_modern_pendant",
+			"name": "White Modern Light Pendant",
+			"inputs": [
+				"white_concrete"
+			],
+			"placement": "ceiling",
+			"yaw_offset": 0,
+			"seat": false,
+			"light": 15,
+			"footprint": []
+		},
+		{
+			"id": "gray_modern_pendant",
+			"name": "Gray Modern Light Pendant",
+			"inputs": [
+				"gray_concrete"
+			],
+			"placement": "ceiling",
+			"yaw_offset": 0,
+			"seat": false,
+			"light": 15,
+			"footprint": []
+		},
+		{
+			"id": "glass_modern_pendant",
+			"name": "Glass Modern Light Pendant",
+			"inputs": [
+				"glass"
+			],
+			"placement": "ceiling",
+			"yaw_offset": 0,
+			"seat": false,
+			"light": 15,
+			"footprint": []
+		},
+		{
+			"id": "light_switch",
+			"name": "Light Switch",
+			"inputs": [
+				"lever"
+			],
+			"placement": "wall",
+			"yaw_offset": 90,
+			"seat": false,
+			"light": 0,
+			"footprint": []
+		},
+		{
+			"id": "white_mirror",
+			"name": "White Mirror",
+			"inputs": [
+				"glass_pane"
+			],
+			"placement": "wall",
+			"yaw_offset": 270,
+			"seat": false,
+			"light": 0,
+			"footprint": []
+		},
+		{
+			"id": "gray_mirror",
+			"name": "Gray Mirror",
+			"inputs": [
+				"glass_pane"
+			],
+			"placement": "wall",
+			"yaw_offset": 270,
+			"seat": false,
+			"light": 0,
+			"footprint": []
+		},
+		{
+			"id": "basic_plate",
+			"name": "Basic Plate",
+			"inputs": [
+				"bowl"
+			],
+			"placement": "floor",
+			"yaw_offset": 180,
+			"seat": false,
+			"light": 0,
+			"footprint": []
+		},
+		{
+			"id": "basic_cutlery",
+			"name": "Basic Cutlery",
+			"inputs": [
+				"iron_nugget"
+			],
+			"placement": "floor",
+			"yaw_offset": 180,
+			"seat": false,
+			"light": 0,
+			"footprint": []
+		},
+		{
+			"id": "basic_shower_head",
+			"name": "Basic Shower Head",
+			"inputs": [
+				"iron_bars"
+			],
+			"placement": "wall",
+			"yaw_offset": 90,
+			"seat": false,
+			"light": 0,
+			"footprint": []
+		},
+		{
+			"id": "basic_shower_handle",
+			"name": "Basic Shower Handle",
+			"inputs": [
+				"iron_bars"
+			],
+			"placement": "wall",
+			"yaw_offset": 90,
+			"seat": false,
+			"light": 0,
+			"footprint": []
+		},
+		{
+			"id": "wall_toilet_paper",
+			"name": "Toilet Paper",
+			"inputs": [
+				"paper"
+			],
+			"placement": "wall",
+			"yaw_offset": 90,
+			"seat": false,
+			"light": 0,
+			"footprint": []
+		},
+		{
+			"id": "mesh_trashcan",
+			"name": "Mesh Trashcan",
+			"inputs": [
+				"iron_bars"
+			],
+			"placement": "floor",
+			"yaw_offset": 90,
+			"seat": false,
+			"light": 0,
+			"footprint": [
+				[
+					0,
+					0,
+					0
+				]
+			]
+		},
+		{
+			"id": "working_table",
+			"name": "Furniture Workbench",
+			"inputs": [
+				"crafting_table"
+			],
+			"placement": "floor",
+			"yaw_offset": 90,
+			"seat": false,
+			"light": 0,
+			"footprint": [
+				[
+					0,
+					0,
+					0
+				]
+			]
+		}
+	]
+}
