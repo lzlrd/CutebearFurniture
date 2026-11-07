@@ -5,6 +5,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Tag;
+import org.bukkit.World;
+import org.bukkit.entity.Interaction;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.StonecuttingRecipe;
@@ -97,6 +99,13 @@ public final class CutebearFurniture extends JavaPlugin {
             registerFurnitureRecipe("gold_" + furniture[0], "Gold " + furniture[1], materialChoice("gold_block"));
         }
         getLogger().info("Registered " + recipeCount + " furniture recipes");
+
+        // Furniture placed before barriers existed becomes solid. Chunks that load later are handled as they load.
+        for (World world : Bukkit.getWorlds()) {
+            for (Interaction interaction : world.getEntitiesByClass(Interaction.class)) {
+                FurnitureBarriers.upgrade(interaction);
+            }
+        }
 
         if (getServer().getPluginManager().isPluginEnabled("floodgate")) {
             if (getServer().getPluginManager().isPluginEnabled("ProtocolLib")) {

@@ -1,6 +1,7 @@
 package dev._0w0b.cutebearFurniture;
 
 import io.papermc.paper.datacomponent.DataComponentTypes;
+import java.util.List;
 import java.util.UUID;
 import org.bukkit.*;
 import org.bukkit.block.BlockFace;
@@ -11,6 +12,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.world.EntitiesLoadEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDismountEvent;
@@ -28,6 +30,8 @@ public class EventListener implements Listener {
 
     @EventHandler
     public void onPlayerInteraction(PlayerInteractEvent event) {
+        if (onBarrierClick(event))
+            return;
         if (event.getPlayer().getGameMode() == GameMode.ADVENTURE)
             return;
         if (event.getAction() == Action.RIGHT_CLICK_BLOCK && event.hasItem()) {
@@ -90,7 +94,7 @@ public class EventListener implements Listener {
                                                         new Vector3f(scale, scale, scale),
                                                         new AxisAngle4f()));
                                     });
-                    spawnLoc
+                    Interaction interaction = spawnLoc
                             .getWorld()
                             .spawn(
                                     spawnLoc,
@@ -115,6 +119,11 @@ public class EventListener implements Listener {
                                                     .set(SITTABLE_KEY, PersistentDataType.BYTE, (byte) 1);
                                         }
                                     });
+                    // Make the piece solid. Blocks beyond the clicked spot (a bathtub's second half) need build rights there too.
+                    Player player = event.getPlayer();
+                    EquipmentSlot placeHand = hand;
+                    FurnitureBarriers.place(interaction, display,
+                            block -> block.equals(placedBlock) || canBuild(block, placedBlock, item, player, placeHand));
                     if (event.getPlayer().getGameMode() != GameMode.CREATIVE)
                         item.setAmount(item.getAmount() - 1);
                 }
@@ -122,19 +131,61 @@ public class EventListener implements Listener {
         }
     }
 
+    // A click on a piece's barrier acts on the piece: left click breaks it, right click sits on it.
+    private boolean onBarrierClick(PlayerInteractEvent event) {
+        Block block = event.getClickedBlock();
+        if (block == null || block.getType() != Material.BARRIER)
+            return false;
+        Interaction interaction = FurnitureBarriers.owner(block);
+        if (interaction == null)
+            return false;
+        Player player = event.getPlayer();
+        if (event.getAction() == Action.LEFT_CLICK_BLOCK) {
+            event.setCancelled(true);
+            if (canBreak(interaction, player))
+                removeFurniture(interaction, player);
+            return true;
+        }
+        if (event.getAction() == Action.RIGHT_CLICK_BLOCK && isSittable(interaction) && !player.isSneaking()) {
+            event.setCancelled(true);
+            if (event.getHand() == EquipmentSlot.HAND)
+                sit(interaction, player);
+            return true;
+        }
+        return false;
+    }
+
+    private boolean canBuild(Block block, Block against, ItemStack item, Player player, EquipmentSlot hand) {
+        BlockPlaceEvent check = new BlockPlaceEvent(block, block.getState(), against, item, player, true, hand);
+        Bukkit.getPluginManager().callEvent(check);
+        return !check.isCancelled() && check.canBuild();
+    }
+
+    private boolean canBreak(Interaction interaction, Player player) {
+        if (player.getGameMode() == GameMode.ADVENTURE)
+            return false;
+        BlockBreakEvent breakEvent = new BlockBreakEvent(interaction.getLocation().getBlock(), player);
+        Bukkit.getPluginManager().callEvent(breakEvent);
+        return !breakEvent.isCancelled();
+    }
+
+    private static boolean isSittable(Interaction interaction) {
+        NamespacedKey SITTABLE_KEY = new NamespacedKey(
+                CutebearFurniture.getInstance(),
+                "is_sittable");
+        return interaction.getPersistentDataContainer().has(SITTABLE_KEY, PersistentDataType.BYTE);
+    }
+
     @EventHandler
     public void onRightClick(PlayerInteractEntityEvent event) {
         if (!(event.getRightClicked() instanceof Interaction interaction))
             return;
-
-        NamespacedKey SITTABLE_KEY = new NamespacedKey(
-                CutebearFurniture.getInstance(),
-                "is_sittable");
-        if (!interaction.getPersistentDataContainer().has(SITTABLE_KEY, PersistentDataType.BYTE))
+        if (!isSittable(interaction))
             return;
+        sit(interaction, event.getPlayer());
+    }
 
-        Player player = event.getPlayer();
-
+    private void sit(Interaction interaction, Player player) {
         NamespacedKey key = new NamespacedKey(
                 CutebearFurniture.getInstance(), "furniture");
         String uuidStr = interaction.getPersistentDataContainer().get(key, PersistentDataType.STRING);
@@ -148,6 +199,8 @@ public class EventListener implements Listener {
 
         UUID displayUUID = UUID.fromString(uuidStr);
         Entity target = Bukkit.getEntity(displayUUID);
+        if (target == null)
+            return;
         Location seatLoc = interaction.getLocation().clone().add(0, 0.3, 0);
         float yaw = (target.getYaw() + 90 + 360) % 360;
         ArmorStand seat = seatLoc
@@ -175,51 +228,68 @@ public class EventListener implements Listener {
     public void onLeftClick(EntityDamageByEntityEvent event) {
         if (!(event.getEntity() instanceof Interaction interaction))
             return;
-        if (event.getDamager() instanceof Player player) {
-            if (player.getGameMode() == GameMode.ADVENTURE) {
-                event.setCancelled(true);
-                return;
-            }
-            BlockBreakEvent breakEvent = new BlockBreakEvent(interaction.getLocation().getBlock(), player);
-            Bukkit.getPluginManager().callEvent(breakEvent);
-            if (breakEvent.isCancelled()) {
-                event.setCancelled(true);
-                return;
-            }
+        Player player = event.getDamager() instanceof Player damager ? damager : null;
+        if (player != null && !canBreak(interaction, player)) {
+            event.setCancelled(true);
+            return;
         }
+        if (removeFurniture(interaction, player))
+            event.setCancelled(true);
+    }
+
+    // Drops the piece for survival players, then removes its display, seat, barriers and interaction.
+    private boolean removeFurniture(Interaction interaction, Player player) {
         NamespacedKey key = new NamespacedKey(
                 CutebearFurniture.getInstance(),
                 "furniture");
         String uuidStr = interaction.getPersistentDataContainer().get(key, PersistentDataType.STRING);
 
-        if (uuidStr != null) {
-            UUID displayUUID = UUID.fromString(uuidStr);
-            Entity target = Bukkit.getEntity(displayUUID);
-            if (target instanceof ItemDisplay display) {
-                ItemStack item = display.getItemStack();
-                if (item != null && !item.getType().isAir()) {
-                    if (event.getDamager() instanceof Player player) {
-                        if (player.getGameMode() == GameMode.SURVIVAL) {
-                            item.setAmount(1);
-                            display.getWorld().dropItemNaturally(display.getLocation(), item);
-                        }
-                    }
+        if (uuidStr == null)
+            return false;
+        UUID displayUUID = UUID.fromString(uuidStr);
+        Entity target = Bukkit.getEntity(displayUUID);
+        if (target instanceof ItemDisplay display) {
+            ItemStack item = display.getItemStack();
+            if (item != null && !item.getType().isAir()) {
+                if (player != null && player.getGameMode() == GameMode.SURVIVAL) {
+                    item.setAmount(1);
+                    display.getWorld().dropItemNaturally(display.getLocation(), item);
                 }
-                display.remove();
-                interaction.getNearbyEntities(0.5, 0.5, 0.5).stream()
-                        .filter(e -> e instanceof ArmorStand)
-                        .filter(
-                                e -> e.getPersistentDataContainer()
-                                        .has(
-                                                new NamespacedKey(
-                                                        CutebearFurniture.getInstance(),
-                                                        "sit_armorstand"),
-                                                PersistentDataType.BYTE))
-                        .forEach(Entity::remove);
-                interaction.remove();
-                event.setCancelled(true);
             }
+            display.remove();
+        } else if (target != null) {
+            return false;
         }
+        // A piece whose display is gone still loses its barriers, so it can't leave an invisible wall.
+        interaction.getNearbyEntities(0.5, 0.5, 0.5).stream()
+                .filter(e -> e instanceof ArmorStand)
+                .filter(
+                        e -> e.getPersistentDataContainer()
+                                .has(
+                                        new NamespacedKey(
+                                                CutebearFurniture.getInstance(),
+                                                "sit_armorstand"),
+                                        PersistentDataType.BYTE))
+                .forEach(Entity::remove);
+        FurnitureBarriers.remove(interaction);
+        interaction.remove();
+        return true;
+    }
+
+    // Furniture placed before barriers existed becomes solid when its chunk loads.
+    @EventHandler
+    public void onEntitiesLoad(EntitiesLoadEvent event) {
+        List<Interaction> pieces = event.getEntities().stream()
+                .filter(entity -> entity instanceof Interaction)
+                .map(entity -> (Interaction) entity)
+                .toList();
+        if (pieces.isEmpty())
+            return;
+        // Next tick, so a bathtub reaching into an unloaded chunk doesn't load it mid entity load.
+        Bukkit.getScheduler().runTask(CutebearFurniture.getInstance(), () -> pieces.forEach(piece -> {
+            if (piece.isValid())
+                FurnitureBarriers.upgrade(piece);
+        }));
     }
 
     @EventHandler

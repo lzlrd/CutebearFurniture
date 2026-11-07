@@ -1,6 +1,6 @@
 # Cutebear's furniture
 
-Fork of [cutebear/CutebearFurniture](https://codeberg.org/cutebear/CutebearFurniture) that adds wood, wool, concrete and gold variants. Use it with the matching [FurnitureResource fork](https://github.com/lzlrd/FurnitureResource).
+Fork of [cutebear/CutebearFurniture](https://codeberg.org/cutebear/CutebearFurniture) that adds wood, wool, concrete and gold variants and makes placed furniture solid. Use it with the matching [FurnitureResource fork](https://github.com/lzlrd/FurnitureResource).
 
 ## A furniture plugin for papermc.
 
@@ -35,5 +35,7 @@ Furniture could be made in the stonecutter
 | Gold Block | Gold BathTub, Gold Sink, Gold Toilet |
 
 Wood types: oak, spruce, birch, jungle, acacia, dark oak, mangrove, cherry, pale oak, poplar, crimson and warped. Types missing from the server's Minecraft version are skipped. Check [here](src/main/java/dev/_0w0b/cutebearFurniture/CutebearFurniture.java) if this is out of date.
+
+Placed furniture is solid: barrier blocks fill the space it stands in, two blocks for a bathtub. Clicking them works like clicking the furniture: left click breaks it, right click sits on chairs, stools and toilets. Furniture placed with an older version gets its barriers the next time its chunk loads. If something removes a piece's entities directly, such as `/kill`, its barriers stay behind; break them in creative.
 
 
