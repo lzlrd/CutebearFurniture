@@ -1,6 +1,6 @@
 # Cutebear's furniture
 
-Fork of [cutebear/CutebearFurniture](https://codeberg.org/cutebear/CutebearFurniture) that adds wood, wool, concrete and gold variants and 941 more pieces from Paladin's Furniture, and makes placed furniture solid. Use it with the matching [FurnitureResource fork](https://github.com/lzlrd/FurnitureResource).
+Fork of [cutebear/CutebearFurniture](https://codeberg.org/cutebear/CutebearFurniture) that adds wood, wool, concrete and gold variants and 1,781 more pieces from Paladin's Furniture, and makes placed furniture solid. Use it with the matching [FurnitureResource fork](https://github.com/lzlrd/FurnitureResource).
 
 ## A furniture plugin for papermc.
 
@@ -28,7 +28,9 @@ Furniture could be made in the stonecutter
 
 | Input | Furniture |
 |---|---|
-| Any log, wood, stem or hyphae (stripped or not) | Chair, Dinner Table, Coffee Table, Classic Desk, Classic Stool, Classic Chair, Modern Chair, Dinner Chair; Basic, Classic, Log and Modern Dining Tables; Classic and Modern Coffee Tables; Basic Desk; Basic and Classic Desk Cabinets; Classic Nightstand; Log, Simple and Modern Stools; Kitchen Counter, Drawer, Sink and Oven; Wall Cabinet; Kitchen Filler Cabinet, Cabinet and Small Cabinet; Simple Bunk Ladder; all in that wood |
+| Any log, wood, stem or hyphae (stripped or not) | Chair, Dinner Table, Coffee Table, Classic Desk, Classic Stool, Classic Chair, Modern Chair, Dinner Chair; Basic, Classic, Log and Modern Dining Tables; Classic and Modern Coffee Tables; Basic Desk; Basic and Classic Desk Cabinets; Classic Nightstand; Log, Simple and Modern Stools; Kitchen Counter, Drawer, Sink and Oven; Wall Cabinet; Kitchen Filler Cabinet, Cabinet and Small Cabinet; Simple Bunk Ladder; Raw Log Table; all in that wood |
+| Stripped log, wood, stem or hyphae | Stripped versions of the chairs, tables, coffee tables, desks, desk cabinets, nightstand, Simple, Classic and Modern Stools, kitchen pieces and Raw Log Table, in that wood |
+| Stone, polished granite, diorite, andesite, deepslate, blackstone, basalt, tuff, cinnabar or sulfur, calcite, or a netherite block | The chairs, tables (the Log Table as a Natural Table), coffee tables, desks, desk cabinets, nightstand, Simple, Classic and Modern Stools and kitchen pieces in that stone |
 | Any wool | Arm Chair, Simple Sofa, Classic Oak Chair and Office Chair in that colour, and a Basic Lamp with that shade in each wood |
 | Any bed | Simple Bed and Classic Bed in that colour, in each wood |
 | Any carpet | Shower Towel in that colour |
@@ -47,7 +49,9 @@ Furniture could be made in the stonecutter
 | Iron Nugget | Basic Cutlery |
 | Paper | Toilet Paper |
 | Crafting Table | Furniture Workbench |
-| Quartz Block | BathTub, Sink, Toilet |
+| Quartz Block | BathTub, Sink, Toilet; the chairs, tables, coffee tables, desks, desk cabinets, nightstand and stools in Quartz, Light Wood and Dark Wood, and the kitchen pieces in Light and Dark Wood |
+| Gray or white concrete, smooth stone, deepslate tiles, white terracotta, polished andesite, deepslate or blackstone | The kitchen pieces in Dark Concrete, Concrete, Smooth Stone, Deepslate Tile, Granite Terracotta, Andesite Stripped Oak, Deepslate Dark Oak or Blackstone Crimson, in that order |
+| Gray, white or light gray concrete | Modern Stools: Gray Dark Oak and Gray from gray, White from white, Light Gray Dark Oak from light gray |
 | Gold Block | Gold BathTub, Gold Sink, Gold Toilet |
 
 Wood types: oak, spruce, birch, jungle, acacia, dark oak, mangrove, cherry, pale oak, poplar, crimson and warped. Types missing from the server's Minecraft version are skipped. Check [here](src/main/java/dev/_0w0b/cutebearFurniture/CutebearFurniture.java) if this is out of date.
