@@ -36,13 +36,19 @@ final class FurnitureBarriers {
         return new NamespacedKey(CutebearFurniture.getInstance(), "furniture");
     }
 
-    // The direction a piece's model x axis points in, from the yaw its display got at placement.
+    // Set on pieces whose barriers follow the corrected facing below.
+    static NamespacedKey footprintKey() {
+        return new NamespacedKey(CutebearFurniture.getInstance(), "footprint_v2");
+    }
+
+    // The direction a piece's model x axis points in, from the yaw its display got at placement. Item displays turn
+    // their model half a turn, so at yaw 0 the model's x axis points west.
     static BlockFace facing(float yaw) {
         return switch (Math.floorMod(Math.round(yaw / 90f), 4)) {
-            case 1 -> BlockFace.SOUTH;
-            case 2 -> BlockFace.WEST;
-            case 3 -> BlockFace.NORTH;
-            default -> BlockFace.EAST;
+            case 1 -> BlockFace.NORTH;
+            case 2 -> BlockFace.EAST;
+            case 3 -> BlockFace.SOUTH;
+            default -> BlockFace.WEST;
         };
     }
 
@@ -69,16 +75,19 @@ final class FurnitureBarriers {
             offsets.add(block.getY() - origin.getY());
             offsets.add(block.getZ() - origin.getZ());
         }
-        interaction.getPersistentDataContainer().set(barriersKey(), PersistentDataType.INTEGER_ARRAY,
-                offsets.stream().mapToInt(Integer::intValue).toArray());
+        PersistentDataContainer data = interaction.getPersistentDataContainer();
+        data.set(barriersKey(), PersistentDataType.INTEGER_ARRAY, offsets.stream().mapToInt(Integer::intValue).toArray());
+        data.set(footprintKey(), PersistentDataType.BYTE, (byte) 1);
     }
 
     // Removes the barriers a piece placed, leaving any other block that is there now.
     static void remove(Interaction interaction) {
-        int[] offsets = interaction.getPersistentDataContainer().get(barriersKey(), PersistentDataType.INTEGER_ARRAY);
+        clear(interaction.getLocation().getBlock(), interaction.getPersistentDataContainer().get(barriersKey(), PersistentDataType.INTEGER_ARRAY));
+    }
+
+    private static void clear(Block origin, int[] offsets) {
         if (offsets == null)
             return;
-        Block origin = interaction.getLocation().getBlock();
         for (int i = 0; i + 2 < offsets.length; i += 3) {
             Block block = origin.getRelative(offsets[i], offsets[i + 1], offsets[i + 2]);
             if (block.getType() == Material.BARRIER)
@@ -105,13 +114,16 @@ final class FurnitureBarriers {
         return null;
     }
 
-    // Gives a piece placed before barriers existed its barriers, once.
+    // Gives a piece placed before barriers existed its barriers, once, and moves the barriers that version 1.7 put on
+    // the wrong side of a bathtub.
     static void upgrade(Interaction interaction) {
         PersistentDataContainer data = interaction.getPersistentDataContainer();
-        if (data.has(barriersKey(), PersistentDataType.INTEGER_ARRAY))
+        if (data.has(footprintKey(), PersistentDataType.BYTE))
             return;
         String uuid = data.get(furnitureKey(), PersistentDataType.STRING);
-        if (uuid != null && Bukkit.getEntity(UUID.fromString(uuid)) instanceof ItemDisplay display)
-            place(interaction, display, block -> true);
+        if (uuid == null || !(Bukkit.getEntity(UUID.fromString(uuid)) instanceof ItemDisplay display))
+            return;
+        clear(interaction.getLocation().getBlock(), data.get(barriersKey(), PersistentDataType.INTEGER_ARRAY));
+        place(interaction, display, block -> true);
     }
 }

@@ -36,6 +36,6 @@ Furniture could be made in the stonecutter
 
 Wood types: oak, spruce, birch, jungle, acacia, dark oak, mangrove, cherry, pale oak, poplar, crimson and warped. Types missing from the server's Minecraft version are skipped. Check [here](src/main/java/dev/_0w0b/cutebearFurniture/CutebearFurniture.java) if this is out of date.
 
-Placed furniture is solid: barrier blocks fill the space it stands in, two blocks for a bathtub. Clicking them works like clicking the furniture: left click breaks it, right click sits on chairs, stools and toilets. Furniture placed with an older version gets its barriers the next time its chunk loads. If something removes a piece's entities directly, such as `/kill`, its barriers stay behind; break them in creative.
+Placed furniture is solid: barrier blocks fill the space it stands in, two blocks for a bathtub. Clicking them works like clicking the furniture: left click breaks it, right click sits on chairs, stools and toilets. Furniture placed with an older version gets its barriers the next time its chunk loads, and a bathtub placed with 1.7, which put its second barrier on the side away from the model, gets that barrier moved. If something removes a piece's entities directly, such as `/kill`, its barriers stay behind; break them in creative.
 
 
