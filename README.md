@@ -1,6 +1,6 @@
 # Cutebear's furniture
 
-Fork of [cutebear/CutebearFurniture](https://codeberg.org/cutebear/CutebearFurniture) that adds wood, wool and concrete variants. Use it with the matching [FurnitureResource fork](https://github.com/lzlrd/FurnitureResource).
+Fork of [cutebear/CutebearFurniture](https://codeberg.org/cutebear/CutebearFurniture) that adds wood, wool, concrete and gold variants. Use it with the matching [FurnitureResource fork](https://github.com/lzlrd/FurnitureResource).
 
 ## A furniture plugin for papermc.
 
@@ -32,6 +32,7 @@ Furniture could be made in the stonecutter
 | Any wool | Arm Chair in that colour |
 | Any concrete | Trash Can in that colour |
 | Quartz Block | BathTub, Sink, Toilet |
+| Gold Block | Gold BathTub, Gold Sink, Gold Toilet |
 
 Wood types: oak, spruce, birch, jungle, acacia, dark oak, mangrove, cherry, pale oak, poplar, crimson and warped. Types missing from the server's Minecraft version are skipped. Check [here](src/main/java/dev/_0w0b/cutebearFurniture/CutebearFurniture.java) if this is out of date.
 

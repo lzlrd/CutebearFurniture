@@ -46,6 +46,13 @@ public final class CutebearFurniture extends JavaPlugin {
             {"warped", "warped_stems"},
     };
 
+    // Model ID and name of each quartz piece, which also comes in gold. Keep in sync with variants.py in FurnitureResource.
+    private static final String[][] QUARTZ_FURNITURE = {
+            {"bathtub", "BathTub"},
+            {"basic_sink", "Sink"},
+            {"toilet", "Toilet"},
+    };
+
     private static final String[] COLOURS = {
             "white", "orange", "magenta", "light_blue", "yellow", "lime", "pink", "gray",
             "light_gray", "cyan", "purple", "blue", "brown", "green", "red", "black",
@@ -85,6 +92,9 @@ public final class CutebearFurniture extends JavaPlugin {
             if (!colour.equals("gray")) {
                 registerFurnitureRecipe(colour + "_trash_can", displayName(colour) + " Trash Can", materialChoice(colour + "_concrete"));
             }
+        }
+        for (String[] furniture : QUARTZ_FURNITURE) {
+            registerFurnitureRecipe("gold_" + furniture[0], "Gold " + furniture[1], materialChoice("gold_block"));
         }
         getLogger().info("Registered " + recipeCount + " furniture recipes");
 
