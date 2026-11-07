@@ -142,10 +142,17 @@ public final class CutebearFurniture extends JavaPlugin {
         return new RecipeChoice.MaterialChoice(material);
     }
 
-    // Any of the named materials that exist in this Minecraft version, or null if none do.
+    // Any of the named materials, or of the items in the named item tags (#oak_logs), that exist in this Minecraft
+    // version, or null if none do.
     private static RecipeChoice materialsChoice(List<String> materialNames) {
         List<Material> materials = new ArrayList<>();
         for (String name : materialNames) {
+            if (name.startsWith("#")) {
+                Tag<Material> tag = Bukkit.getTag(Tag.REGISTRY_ITEMS, NamespacedKey.minecraft(name.substring(1)), Material.class);
+                if (tag != null)
+                    materials.addAll(tag.getValues());
+                continue;
+            }
             Material material = Material.matchMaterial(name);
             if (material != null)
                 materials.add(material);

@@ -1,6 +1,6 @@
 # Cutebear's furniture
 
-Fork of [cutebear/CutebearFurniture](https://codeberg.org/cutebear/CutebearFurniture) that adds wood, wool, concrete and gold variants, 85 more pieces from Paladin's Furniture, and makes placed furniture solid. Use it with the matching [FurnitureResource fork](https://github.com/lzlrd/FurnitureResource).
+Fork of [cutebear/CutebearFurniture](https://codeberg.org/cutebear/CutebearFurniture) that adds wood, wool, concrete and gold variants and 941 more pieces from Paladin's Furniture, and makes placed furniture solid. Use it with the matching [FurnitureResource fork](https://github.com/lzlrd/FurnitureResource).
 
 ## A furniture plugin for papermc.
 
@@ -28,8 +28,9 @@ Furniture could be made in the stonecutter
 
 | Input | Furniture |
 |---|---|
-| Any log, wood, stem or hyphae (stripped or not) | Chair, Dinner Table, Coffee Table, Classic Desk, Classic Stool, Classic Chair, Modern Chair, Dinner Chair in that wood |
-| Any wool | Arm Chair, Simple Sofa and Classic Oak Chair in that colour |
+| Any log, wood, stem or hyphae (stripped or not) | Chair, Dinner Table, Coffee Table, Classic Desk, Classic Stool, Classic Chair, Modern Chair, Dinner Chair; Basic, Classic, Log and Modern Dining Tables; Classic and Modern Coffee Tables; Basic Desk; Basic and Classic Desk Cabinets; Classic Nightstand; Log, Simple and Modern Stools; Kitchen Counter, Drawer, Sink and Oven; Wall Cabinet; Kitchen Filler Cabinet, Cabinet and Small Cabinet; Simple Bunk Ladder; all in that wood |
+| Any wool | Arm Chair, Simple Sofa, Classic Oak Chair and Office Chair in that colour, and a Basic Lamp with that shade in each wood |
+| Any bed | Simple Bed and Classic Bed in that colour, in each wood |
 | Any carpet | Shower Towel in that colour |
 | Any concrete | Trash Can in that colour |
 | Green, pink, light blue, blue, orange or yellow concrete | Froggy Chair in that colour |
@@ -51,6 +52,6 @@ Furniture could be made in the stonecutter
 
 Wood types: oak, spruce, birch, jungle, acacia, dark oak, mangrove, cherry, pale oak, poplar, crimson and warped. Types missing from the server's Minecraft version are skipped. Check [here](src/main/java/dev/_0w0b/cutebearFurniture/CutebearFurniture.java) if this is out of date.
 
-Most furniture goes on top of a block and faces you. Shower towels, oven range hoods, mirrors, the light switch, shower head and handle, and toilet paper go on the side of a block, backed against it. The ceiling light and light pendants go under a block and give off light level 15. The pieces from Paladin's Furniture are decorative: fridges, freezers, stoves and the workbench don't open. [furniture.json](src/main/resources/furniture.json), which FurnitureResource's `tools/import_pfm.py` writes, lists each of these pieces with its input and placement.
+Most furniture goes on top of a block and faces you; a bed takes the block you click and the one beyond it. Shower towels, oven range hoods, mirrors, the light switch, shower head and handle, toilet paper, the wall and kitchen cabinets and the bunk ladder go on the side of a block, backed against it. The ceiling light and light pendants go under a block. Lamps, the ceiling light and the pendants give off light level 15. The pieces from Paladin's Furniture are decorative: fridges, stoves, drawers, cabinets and the workbench don't open, and beds aren't for sleeping. [furniture.json](src/main/resources/furniture.json), which FurnitureResource's `tools/import_pfm.py` writes, lists each of these pieces with its input and placement.
 
-Placed furniture is solid: barrier blocks fill the space it stands in, two blocks for a bathtub and two high for the Xbox fridge. Wall and ceiling pieces are not solid, nor are the microwave, toaster, stovetop, plate and cutlery. Clicking the barriers works like clicking the furniture: left click breaks it, right click sits on chairs, stools, toilets, sofas and armchairs. Furniture placed with an older version gets its barriers the next time its chunk loads, and a bathtub placed with 1.7, which put its second barrier on the side away from the model, gets that barrier moved. If something removes a piece's entities directly, such as `/kill`, its barriers stay behind; break them in creative.
+Placed furniture is solid: barrier blocks fill the space it stands in, two blocks for a bathtub or bed and two high for the Xbox fridge. Wall and ceiling pieces are not solid except the kitchen cabinets, nor are lamps, the microwave, toaster, stovetop, plate and cutlery. Clicking the barriers works like clicking the furniture: left click breaks it, right click sits on chairs, stools, toilets, sofas, armchairs and office chairs. Furniture placed with an older version gets its barriers the next time its chunk loads, and a bathtub placed with 1.7, which put its second barrier on the side away from the model, gets that barrier moved. If something removes a piece's entities directly, such as `/kill`, its barriers stay behind; break them in creative.
