@@ -4,6 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
@@ -13,6 +14,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import org.bukkit.entity.ItemDisplay;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -24,10 +27,12 @@ final class FurnitureTypes {
 
     /**
      * One piece. yawOffset is added to the yaw of the player's facing (floor and ceiling pieces) or of the wall
-     * (wall pieces); footprint lists the barrier blocks as offsets along the model's x, y and z axes.
+     * (wall pieces); footprint lists the barrier blocks as offsets along the model's x, y and z axes. storage is the
+     * number of slots the piece holds (0 for none), bed the colour of the vanilla bed it sleeps as (null for none), use
+     * the menu it opens (null for none) and climb whether players climb it like a ladder.
      */
     record Type(String id, String name, List<String> inputs, Placement placement, int yawOffset, boolean seat,
-                int light, List<int[]> footprint) {
+                int light, List<int[]> footprint, int storage, String bed, String use, boolean climb) {
     }
 
     private static final Map<String, Type> TYPES = new LinkedHashMap<>();
@@ -61,7 +66,11 @@ final class FurnitureTypes {
                         item.get("yaw_offset").getAsInt(),
                         item.get("seat").getAsBoolean(),
                         item.get("light").getAsInt(),
-                        footprint);
+                        footprint,
+                        item.has("storage") ? item.get("storage").getAsInt() : 0,
+                        item.has("bed") ? item.get("bed").getAsString() : null,
+                        item.has("use") ? item.get("use").getAsString() : null,
+                        item.has("climb") && item.get("climb").getAsBoolean());
                 TYPES.put(type.id(), type);
             }
         } catch (Exception exception) {
@@ -76,5 +85,28 @@ final class FurnitureTypes {
 
     static Collection<Type> all() {
         return TYPES.values();
+    }
+
+    // The type of a placed piece, from its display's item model, or null for the first pieces and other displays.
+    static Type of(ItemDisplay display) {
+        String model = model(display);
+        return model == null ? null : get(model);
+    }
+
+    // The item model ID of a placed piece, such as cutebear_furniture:trash_can, or null if its display has none.
+    static String model(ItemDisplay display) {
+        ItemStack item = display.getItemStack();
+        if (item == null || !item.hasData(DataComponentTypes.ITEM_MODEL))
+            return null;
+        return String.valueOf(item.getData(DataComponentTypes.ITEM_MODEL).key());
+    }
+
+    // The slots a piece holds. The first pieces' trash cans hold a chest's worth, like the imported mesh trash can.
+    static int storage(String model) {
+        Type type = get(model);
+        if (type != null)
+            return type.storage();
+        String id = model.substring(model.indexOf(':') + 1);
+        return id.equals("trash_can") || id.endsWith("_trash_can") ? 27 : 0;
     }
 }

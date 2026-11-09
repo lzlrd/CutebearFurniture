@@ -19,7 +19,7 @@ Geyser is not supported due to having no good way of doing item display, bedrock
 
 3. install the plugin
 
-4. (Geyser only) Install [GeyserDisplayEntity](https://github.com/GeyserExtensionists/GeyserDisplayEntity) in geyser extensions and add [pack](https://github.com/GeyserExtensionists/GeyserDisplayEntity/blob/main/packs/GeyserDisplayEntityPack.mcpack) to geyser's pack, then add `cutebear_furniture.mcpack` to geyser's `packs` and `cutebear_furniture.json` to geyser's `custom_mappings` from the same FurnitureResource release
+4. (Geyser only) Install [Floodgate](https://geysermc.org/download), which the plugin uses to show Bedrock players climbable ladders, and [GeyserDisplayEntity](https://github.com/GeyserExtensionists/GeyserDisplayEntity) in geyser extensions and add [pack](https://github.com/GeyserExtensionists/GeyserDisplayEntity/blob/main/packs/GeyserDisplayEntityPack.mcpack) to geyser's pack, then add `cutebear_furniture.mcpack` to geyser's `packs` and `cutebear_furniture.json` to geyser's `custom_mappings` from the same FurnitureResource release
 
 
 ## Player guide:
@@ -56,6 +56,23 @@ Furniture could be made in the stonecutter
 
 Wood types: oak, spruce, birch, jungle, acacia, dark oak, mangrove, cherry, pale oak, poplar, crimson and warped. Types missing from the server's Minecraft version are skipped. Check [here](src/main/java/dev/_0w0b/cutebearFurniture/CutebearFurniture.java) if this is out of date.
 
-Most furniture goes on top of a block and faces you; a bed takes the block you click and the one beyond it. Shower towels, oven range hoods, mirrors, the light switch, shower head and handle, toilet paper, the wall and kitchen cabinets and the bunk ladder go on the side of a block, backed against it. The ceiling light and light pendants go under a block. Lamps, the ceiling light and the pendants give off light level 15. The pieces from Paladin's Furniture are decorative: fridges, stoves, drawers, cabinets and the workbench don't open, and beds aren't for sleeping. [furniture.json](src/main/resources/furniture.json), which FurnitureResource's `tools/import_pfm.py` writes, lists each of these pieces with its input and placement.
+Most furniture goes on top of a block and faces you; a bed takes the block you click and the one beyond it. Shower towels, oven range hoods, mirrors, the light switch, shower head and handle, toilet paper, the wall and kitchen cabinets and the bunk ladder go on the side of a block, backed against it. The ceiling light and light pendants go under a block. Lamps, the ceiling light and the pendants give off light level 15. [furniture.json](src/main/resources/furniture.json), which FurnitureResource's `tools/import_pfm.py` writes, lists each of these pieces with its input, placement and use.
 
-Placed furniture is solid: barrier blocks fill the space it stands in, two blocks for a bathtub or bed and two high for the Xbox fridge. Wall and ceiling pieces are not solid except the kitchen cabinets, nor are lamps, the microwave, toaster, stovetop, plate and cutlery. Clicking the barriers works like clicking the furniture: left click breaks it, right click sits on chairs, stools, toilets, sofas, armchairs and office chairs. Furniture placed with an older version gets its barriers the next time its chunk loads, and a bathtub placed with 1.7, which put its second barrier on the side away from the model, gets that barrier moved. If something removes a piece's entities directly, such as `/kill`, its barriers stay behind; break them in creative.
+Right-click a piece to use it:
+
+| Piece | Right-click |
+|---|---|
+| Kitchen Counter, Kitchen Drawer, Kitchen Sink, Wall Cabinet, Kitchen Filler Cabinet, Kitchen Cabinet, Basic and Classic Desk Cabinets, Trash Can, Mesh Trashcan | Opens 27 slots, like a chest |
+| Kitchen Small Cabinet, Classic Nightstand | Opens 9 slots |
+| Fridge, Freezer, Iron Fridge, Iron Freezer, Xbox Series X Fridge | Opens 54 slots, like a double chest |
+| Simple Bed, Classic Bed | Sleeps in it, as in a vanilla bed |
+| Furniture Workbench | Opens a stonecutter, where furniture is made |
+| Chairs, stools, toilets, sofas, armchairs, office chairs | Sits on it |
+
+What a piece holds drops when it breaks. Sneak to put a block or a piece on top of one of these, as on a chest; anything else takes it without sneaking.
+
+A bed works as a vanilla bed does: it skips the night, resets phantoms and sets your spawn, with the same messages. While you sleep it is a vanilla bed of its colour, and it turns back when you get up. Your spawn goes beside the bed, and breaking the bed loses it.
+
+Bunk ladders can be climbed. Each holds a structure void, which the `cutebear_furniture` data pack makes climbable; the plugin installs the pack in the main world's `datapacks` folder, and the server loads it at its next restart. Bedrock can't climb an invisible block, so Bedrock players see a vanilla ladder in its place.
+
+Placed furniture is solid: barrier blocks fill the space it stands in, two blocks for a bathtub or bed and two high for the Xbox fridge. Wall and ceiling pieces are not solid except the kitchen cabinets and oven range hoods, nor are the stovetop, plate and cutlery. A lamp is solid with its light in the block above it; with that block taken, it shines from its own block and stays open. Clicking the barriers works like clicking the furniture: left click breaks it and right click uses it. A piece's interaction entity sits on the floor of its block, with no size where a barrier fills that block, so clicks reach the barrier on Java and Bedrock alike and blocks go on top as on any other block. Furniture placed with an older version is brought up to date the next time its chunk loads: its barriers, lamp light and ladder as above, its interaction moved down, and, for a bathtub placed with 1.7, which put its second barrier on the side away from the model, that barrier moved. If something removes a piece's entities directly, such as `/kill`, its barriers stay behind; break them in creative.

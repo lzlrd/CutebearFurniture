@@ -21,6 +21,8 @@ import static org.bukkit.Bukkit.getServer;
 public final class CutebearFurniture extends JavaPlugin {
     private static CutebearFurniture instance;
     private int recipeCount = 0;
+    private FurnitureStorage storage;
+    private FurnitureBeds beds;
 
     // Model ID and name of each wooden piece. Keep in sync with variants.py in FurnitureResource.
     private static final String[][] WOODEN_FURNITURE = {
@@ -66,7 +68,16 @@ public final class CutebearFurniture extends JavaPlugin {
     public void onEnable() {
         CutebearFurniture.instance = this;
         // Plugin startup logic
-        Bukkit.getPluginManager().registerEvents(new EventListener(), this);
+        storage = new FurnitureStorage();
+        beds = new FurnitureBeds();
+        FurnitureLadders ladders = new FurnitureLadders();
+        EventListener listener = new EventListener(storage, beds, ladders);
+        Bukkit.getPluginManager().registerEvents(listener, this);
+        Bukkit.getPluginManager().registerEvents(storage, this);
+        Bukkit.getPluginManager().registerEvents(beds, this);
+        Bukkit.getPluginManager().registerEvents(ladders, this);
+        storage.start(this);
+        beds.start(this);
         // The original furniture keeps its IDs and names so placed furniture still works.
         RecipeChoice oak = tagChoice("oak_logs");
         registerFurnitureRecipe("chair", "Oak Chair", oak);
@@ -107,12 +118,13 @@ public final class CutebearFurniture extends JavaPlugin {
         }
         getLogger().info("Registered " + recipeCount + " furniture recipes");
 
-        // Furniture placed before barriers existed becomes solid. Chunks that load later are handled as they load.
+        // Furniture placed by an older version is brought up to date. Chunks that load later are handled as they load.
         for (World world : Bukkit.getWorlds()) {
             for (Interaction interaction : world.getEntitiesByClass(Interaction.class)) {
-                FurnitureBarriers.upgrade(interaction);
+                listener.load(interaction);
             }
         }
+        FurnitureDatapack.install(this);
 
         if (getServer().getPluginManager().isPluginEnabled("floodgate")) {
             if (getServer().getPluginManager().isPluginEnabled("ProtocolLib")) {
@@ -125,7 +137,11 @@ public final class CutebearFurniture extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        // Plugin shutdown logic
+        // Beds go back to furniture and storage is written to its pieces before the server saves the world.
+        if (beds != null)
+            beds.releaseAll();
+        if (storage != null)
+            storage.closeAll();
     }
 
     private static RecipeChoice tagChoice(String tagName) {

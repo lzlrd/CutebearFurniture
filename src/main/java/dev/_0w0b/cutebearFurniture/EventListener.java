@@ -7,6 +7,7 @@ import org.bukkit.*;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.*;
 import org.bukkit.block.Block;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
@@ -20,6 +21,7 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.MenuType;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.Transformation;
 import org.joml.AxisAngle4f;
@@ -27,15 +29,26 @@ import org.joml.Vector3f;
 
 public class EventListener implements Listener {
     final int scale = 1;
+    private final FurnitureStorage storage;
+    private final FurnitureBeds beds;
+    private final FurnitureLadders ladders;
+
+    EventListener(FurnitureStorage storage, FurnitureBeds beds, FurnitureLadders ladders) {
+        this.storage = storage;
+        this.beds = beds;
+        this.ladders = ladders;
+    }
 
     @EventHandler
     public void onPlayerInteraction(PlayerInteractEvent event) {
-        if (onBarrierClick(event))
+        if (onFurnitureBlockClick(event))
             return;
         if (event.getPlayer().getGameMode() == GameMode.ADVENTURE)
             return;
         if (event.getAction() == Action.RIGHT_CLICK_BLOCK && event.hasItem()) {
 
+            if (beds.isTemporary(event.getClickedBlock()))
+                return;
             if (event.getClickedBlock().getType().isInteractable() && !event.getPlayer().isSneaking())
                 return;
             if (event.hasItem()) {
@@ -113,10 +126,12 @@ public class EventListener implements Listener {
                                                         new Vector3f(scale, scale, scale),
                                                         new AxisAngle4f()));
                                     });
+                    // The interaction sits on the floor of the piece's block. Placing the barriers below fits it to
+                    // them.
                     Interaction interaction = spawnLoc
                             .getWorld()
                             .spawn(
-                                    spawnLoc,
+                                    placedBlock.getLocation().add(0.5, 0, 0.5),
                                     Interaction.class,
                                     entity -> {
                                         entity.setInteractionWidth(1.0f);
@@ -145,6 +160,7 @@ public class EventListener implements Listener {
                     EquipmentSlot placeHand = hand;
                     FurnitureBarriers.place(interaction, display,
                             block -> block.equals(placedBlock) || canBuild(block, placedBlock, item, player, placeHand));
+                    ladders.track(interaction);
                     if (event.getPlayer().getGameMode() != GameMode.CREATIVE)
                         item.setAmount(item.getAmount() - 1);
                 }
@@ -152,10 +168,11 @@ public class EventListener implements Listener {
         }
     }
 
-    // A click on a piece's barrier acts on the piece: left click breaks it, right click sits on it.
-    private boolean onBarrierClick(PlayerInteractEvent event) {
+    // A click on a piece's barrier, or on the climbing block in a ladder, acts on the piece: left click breaks it and
+    // right click uses it. Sneaking right clicks place blocks and furniture against it instead, as on a chest.
+    private boolean onFurnitureBlockClick(PlayerInteractEvent event) {
         Block block = event.getClickedBlock();
-        if (block == null || block.getType() != Material.BARRIER)
+        if (block == null)
             return false;
         Interaction interaction = FurnitureBarriers.owner(block);
         if (interaction == null)
@@ -167,13 +184,43 @@ public class EventListener implements Listener {
                 removeFurniture(interaction, player);
             return true;
         }
-        if (event.getAction() == Action.RIGHT_CLICK_BLOCK && isSittable(interaction) && !player.isSneaking()) {
+        if (event.getAction() == Action.RIGHT_CLICK_BLOCK && event.useInteractedBlock() != Event.Result.DENY) {
+            Runnable use = use(interaction, player);
+            if (use == null)
+                return false;
             event.setCancelled(true);
             if (event.getHand() == EquipmentSlot.HAND)
-                sit(interaction, player);
+                use.run();
             return true;
         }
         return false;
+    }
+
+    // What right clicking a piece does, or null for nothing: sleep in a bed, open a piece that stores things, open the
+    // furniture workbench's stonecutter, or sit down.
+    private Runnable use(Interaction interaction, Player player) {
+        if (player.isSneaking())
+            return null;
+        ItemDisplay display = FurnitureBarriers.display(interaction);
+        if (display == null)
+            return null;
+        String model = FurnitureTypes.model(display);
+        FurnitureTypes.Type type = model == null ? null : FurnitureTypes.get(model);
+        if (type != null && type.bed() != null)
+            return () -> beds.use(interaction, display, player, type.bed());
+        int slots = model == null ? 0 : FurnitureTypes.storage(model);
+        if (slots > 0)
+            return () -> storage.open(interaction, display, player, slots);
+        if (type != null && "stonecutter".equals(type.use()))
+            return () -> MenuType.STONECUTTER.builder()
+                    .location(display.getLocation())
+                    .checkReachable(false)
+                    .title(FurnitureStorage.title(display))
+                    .build(player)
+                    .open();
+        if (isSittable(interaction))
+            return () -> sit(interaction, player);
+        return null;
     }
 
     private boolean canBuild(Block block, Block against, ItemStack item, Player player, EquipmentSlot hand) {
@@ -197,13 +244,27 @@ public class EventListener implements Listener {
         return interaction.getPersistentDataContainer().has(SITTABLE_KEY, PersistentDataType.BYTE);
     }
 
-    @EventHandler
+    // Pieces without a barrier in their own block are clicked through their interaction.
+    @EventHandler(ignoreCancelled = true)
     public void onRightClick(PlayerInteractEntityEvent event) {
         if (!(event.getRightClicked() instanceof Interaction interaction))
             return;
-        if (!isSittable(interaction))
+        Runnable use = use(interaction, event.getPlayer());
+        if (use == null)
             return;
-        sit(interaction, event.getPlayer());
+        event.setCancelled(true);
+        if (event.getHand() == EquipmentSlot.HAND)
+            use.run();
+    }
+
+    // Where a piece's seat goes: just under the top of its block.
+    private static Location seat(Interaction interaction) {
+        return interaction.getLocation().getBlock().getLocation().add(0.5, 0.8, 0.5);
+    }
+
+    private static boolean isSeat(Entity entity) {
+        return entity instanceof ArmorStand && entity.getPersistentDataContainer().has(
+                new NamespacedKey(CutebearFurniture.getInstance(), "sit_armorstand"), PersistentDataType.BYTE);
     }
 
     private void sit(Interaction interaction, Player player) {
@@ -213,7 +274,8 @@ public class EventListener implements Listener {
 
         if (uuidStr == null || player.isSneaking())
             return;
-        boolean alreadyOccupied = interaction.getNearbyEntities(0.1, 0.1, 0.1).stream()
+        Location seatLoc = seat(interaction);
+        boolean alreadyOccupied = seatLoc.getWorld().getNearbyEntities(seatLoc, 0.2, 0.2, 0.2).stream()
                 .anyMatch(e -> e instanceof ArmorStand && !e.getPassengers().isEmpty());
         if (alreadyOccupied)
             return;
@@ -222,7 +284,6 @@ public class EventListener implements Listener {
         Entity target = Bukkit.getEntity(displayUUID);
         if (target == null)
             return;
-        Location seatLoc = interaction.getLocation().clone().add(0, 0.3, 0);
         float yaw = (target.getYaw() + 90 + 360) % 360;
         ArmorStand seat = seatLoc
                 .getWorld()
@@ -258,7 +319,8 @@ public class EventListener implements Listener {
             event.setCancelled(true);
     }
 
-    // Drops the piece for survival players, then removes its display, seat, barriers and interaction.
+    // Drops the piece for survival players and what it holds for anyone, then removes its display, seat, blocks and
+    // interaction. A bed someone sleeps in wakes them first.
     private boolean removeFurniture(Interaction interaction, Player player) {
         NamespacedKey key = new NamespacedKey(
                 CutebearFurniture.getInstance(),
@@ -269,7 +331,11 @@ public class EventListener implements Listener {
             return false;
         UUID displayUUID = UUID.fromString(uuidStr);
         Entity target = Bukkit.getEntity(displayUUID);
+        if (target != null && !(target instanceof ItemDisplay))
+            return false;
+        beds.release(interaction);
         if (target instanceof ItemDisplay display) {
+            storage.drop(interaction, display.getLocation());
             ItemStack item = display.getItemStack();
             if (item != null && !item.getType().isAir()) {
                 if (player != null && player.getGameMode() == GameMode.SURVIVAL) {
@@ -277,27 +343,23 @@ public class EventListener implements Listener {
                     display.getWorld().dropItemNaturally(display.getLocation(), item);
                 }
             }
+            ladders.removed(display);
             display.remove();
-        } else if (target != null) {
-            return false;
+        } else {
+            storage.drop(interaction, interaction.getLocation());
         }
         // A piece whose display is gone still loses its barriers, so it can't leave an invisible wall.
-        interaction.getNearbyEntities(0.5, 0.5, 0.5).stream()
-                .filter(e -> e instanceof ArmorStand)
-                .filter(
-                        e -> e.getPersistentDataContainer()
-                                .has(
-                                        new NamespacedKey(
-                                                CutebearFurniture.getInstance(),
-                                                "sit_armorstand"),
-                                        PersistentDataType.BYTE))
+        Location seatLoc = seat(interaction);
+        seatLoc.getWorld().getNearbyEntities(seatLoc, 0.5, 0.5, 0.5).stream()
+                .filter(EventListener::isSeat)
                 .forEach(Entity::remove);
         FurnitureBarriers.remove(interaction);
         interaction.remove();
         return true;
     }
 
-    // Furniture placed before barriers existed becomes solid when its chunk loads.
+    // Furniture placed by an older version is brought up to date when its chunk loads, and a bed left as a vanilla
+    // bed by a stopped server is put back.
     @EventHandler
     public void onEntitiesLoad(EntitiesLoadEvent event) {
         List<Interaction> pieces = event.getEntities().stream()
@@ -309,8 +371,14 @@ public class EventListener implements Listener {
         // Next tick, so a bathtub reaching into an unloaded chunk doesn't load it mid entity load.
         Bukkit.getScheduler().runTask(CutebearFurniture.getInstance(), () -> pieces.forEach(piece -> {
             if (piece.isValid())
-                FurnitureBarriers.upgrade(piece);
+                load(piece);
         }));
+    }
+
+    void load(Interaction piece) {
+        FurnitureBarriers.upgrade(piece);
+        beds.recover(piece);
+        ladders.track(piece);
     }
 
     @EventHandler
